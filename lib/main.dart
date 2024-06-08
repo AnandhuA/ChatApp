@@ -1,4 +1,4 @@
-
+import 'package:chatapp/persentation/authentication/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,9 +11,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
+      debugShowCheckedModeBanner: false,
+      home: LoginScreen(),
+      darkTheme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: Colors.black,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.black,
+        ),
       ),
-      
     );
   }
 }

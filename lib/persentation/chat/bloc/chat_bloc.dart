@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:chatapp/functions/db_functions.dart';
 import 'package:chatapp/persentation/models/chat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
@@ -20,7 +21,6 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   @override
   Future<void> close() {
-    // Close the WebSocket channel when the bloc is closed
     myChannel.sink.close();
     return super.close();
   }
@@ -30,14 +30,23 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     Emitter<ChatState> emit,
   ) async {
     emit(ChatLoadingState());
-    chatList.add(ChatModel(message: event.message, code: "0"));
+    ChatModel model = ChatModel(
+      message: event.message,
+      code: "0",
+    );
+    await DbChatFunctions.addChatList(chatModel: model);
+    chatList.add(model);
 
     try {
       myChannel.sink.add(event.message);
 
       await for (var message in myChannel.stream) {
-        chatList.add(
-            ChatModel(message: message, code: myChannel.hashCode.toString()));
+        ChatModel model = ChatModel(
+          message: message,
+          code: myChannel.hashCode.toString(),
+        );
+        await DbChatFunctions.addChatList(chatModel: model);
+        chatList.add(model);
         emit(ChatSuccessState());
       }
     } catch (error) {

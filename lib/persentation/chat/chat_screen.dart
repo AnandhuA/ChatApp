@@ -6,7 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatScreen extends StatelessWidget {
   ChatScreen({super.key});
+
   final TextEditingController chatController = TextEditingController();
+
   final ScrollController _scrollController = ScrollController();
 
   void _scrollToBottom() {
@@ -49,8 +51,6 @@ class ChatScreen extends StatelessWidget {
                           );
                         },
                         itemBuilder: (context, index) {
-                          print(chatList[index].message);
-                          print(chatList[index].code);
                           return Row(
                             mainAxisAlignment: chatList[index].code == "0"
                                 ? MainAxisAlignment.end
@@ -60,7 +60,9 @@ class ChatScreen extends StatelessWidget {
                                 child: Container(
                                   padding: const EdgeInsets.all(10),
                                   decoration: BoxDecoration(
-                                    color: Colors.purple.shade400,
+                                    color: chatList[index].code == "0"
+                                        ? Colors.purple.shade400
+                                        : Colors.purple.shade900,
                                     border: Border.all(),
                                     borderRadius: BorderRadius.only(
                                       topRight: const Radius.circular(20),
@@ -81,6 +83,11 @@ class ChatScreen extends StatelessWidget {
                                     children: [
                                       Text(
                                         chatList[index].message,
+                                        // style: TextStyle(
+                                        //       color: chatList[index].code == "0"
+                                        //           ? Colors.black
+                                        //           : Colors.white,
+                                        //     ),
                                       ),
                                     ],
                                   ),

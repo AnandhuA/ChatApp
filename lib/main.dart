@@ -1,4 +1,5 @@
 import 'package:chatapp/functions/db_functions.dart';
+import 'package:chatapp/persentation/authentication/bloc/authentication_bloc.dart';
 import 'package:chatapp/persentation/authentication/login_screen.dart';
 import 'package:chatapp/persentation/chat/bloc/chat_bloc.dart';
 import 'package:chatapp/persentation/models/chat_model.dart';
@@ -26,8 +27,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => ChatBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ChatBloc(),
+        ),
+        BlocProvider(
+          create: (context) => AuthenticationBloc(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: LoginScreen(),

@@ -47,11 +47,11 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         );
         await DbChatFunctions.addChatList(chatModel: model);
         chatList.add(model);
-        emit(ChatSuccessState());
+        return emit(ChatSuccessState());
       }
     } catch (error) {
       log("eroorrr");
-      
+      return emit(ChatErrorState(error: error.toString()));
     }
   }
 }

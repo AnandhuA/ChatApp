@@ -1,6 +1,4 @@
-// ignore_for_file: invalid_use_of_visible_for_testing_member
-
-import 'dart:io';
+import 'dart:developer';
 
 import 'package:chatapp/persentation/chat/bloc/chat_bloc.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +7,19 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ChatScreen extends StatelessWidget {
   ChatScreen({super.key});
   final TextEditingController chatController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
 
-  final myChannel = WebSocket.connect("wss://echo.websocket.org/");
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,71 +30,68 @@ class ChatScreen extends StatelessWidget {
       body: BlocConsumer<ChatBloc, ChatState>(
         listener: (context, state) {},
         builder: (context, state) {
+          _scrollToBottom();
           return Column(
             children: [
               BlocBuilder<ChatBloc, ChatState>(
                 builder: (context, state) {
-                  if (state is ChatSuccessState || state is ChatInitial) {
-                    return Expanded(
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        child: ListView.separated(
-                          itemCount: chatList.length,
-                          reverse: true,
-                          separatorBuilder: (context, index) {
-                            return const SizedBox(
-                              height: 10,
-                            );
-                          },
-                          itemBuilder: (context, index) {
-                            final reversedIndex = chatList.length - 1 - index;
-                            return Row(
-                              mainAxisAlignment: index % 2 == 0
-                                  ? MainAxisAlignment.end
-                                  : MainAxisAlignment.start,
-                              children: [
-                                Flexible(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.purple.shade400,
-                                      border: Border.all(),
-                                      borderRadius: BorderRadius.only(
-                                        topRight: const Radius.circular(20),
-                                        topLeft: const Radius.circular(20),
-                                        bottomLeft: Radius.circular(
-                                          index % 2 == 0 ? 20 : 0,
-                                        ),
-                                        bottomRight: Radius.circular(
-                                          index % 2 == 0 ? 0 : 20,
-                                        ),
+                  log(state.toString());
+
+                  return Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: ListView.separated(
+                        controller: _scrollController,
+                        itemCount: chatList.length,
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(
+                            height: 10,
+                          );
+                        },
+                        itemBuilder: (context, index) {
+                          print(chatList[index].message);
+                          print(chatList[index].code);
+                          return Row(
+                            mainAxisAlignment: chatList[index].code == "0"
+                                ? MainAxisAlignment.end
+                                : MainAxisAlignment.start,
+                            children: [
+                              Flexible(
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.purple.shade400,
+                                    border: Border.all(),
+                                    borderRadius: BorderRadius.only(
+                                      topRight: const Radius.circular(20),
+                                      topLeft: const Radius.circular(20),
+                                      bottomLeft: Radius.circular(
+                                        chatList[index].code == "0" ? 20 : 0,
+                                      ),
+                                      bottomRight: Radius.circular(
+                                        chatList[index].code == "0" ? 0 : 20,
                                       ),
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment: index % 2 == 0
-                                          ? CrossAxisAlignment.end
-                                          : CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          chatList[reversedIndex],
-                                        ),
-                                      ],
-                                    ),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        chatList[index].code == "0"
+                                            ? CrossAxisAlignment.end
+                                            : CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        chatList[index].message,
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            );
-                          },
-                        ),
+                              ),
+                            ],
+                          );
+                        },
                       ),
-                    );
-                  } else {
-                    return const SizedBox(
-                      child: Center(
-                        child: Text("no"),
-                      ),
-                    );
-                  }
+                    ),
+                  );
                 },
               ),
               Container(

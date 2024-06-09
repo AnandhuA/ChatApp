@@ -1,5 +1,6 @@
 import 'package:chatapp/persentation/authentication/login_screen.dart';
 import 'package:chatapp/persentation/chat/bloc/chat_bloc.dart';
+import 'package:chatapp/persentation/chat/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       create: (context) => ChatBloc(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
+        home: ChatScreen(),
         darkTheme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: Colors.black,
           appBarTheme: const AppBarTheme(

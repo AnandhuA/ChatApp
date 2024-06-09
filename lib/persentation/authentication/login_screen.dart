@@ -1,12 +1,11 @@
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:chatapp/core/size.dart';
 import 'package:chatapp/core/validation.dart';
+import 'package:chatapp/functions/firebase_funtions.dart';
 import 'package:chatapp/persentation/authentication/signup_screen.dart';
 import 'package:chatapp/persentation/authentication/widgets/custom_button.dart';
 import 'package:chatapp/persentation/authentication/widgets/text_field_widget.dart';
-import 'package:chatapp/persentation/chat/chat_screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -57,12 +56,10 @@ class LoginScreen extends StatelessWidget {
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
                         log("message");
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => ChatScreen(),
-                          ),
-                          (route) => false,
+                        loginFunction(
+                          context: context,
+                          email: _emailController.text,
+                          password: _passwordController.text,
                         );
                       }
                     },

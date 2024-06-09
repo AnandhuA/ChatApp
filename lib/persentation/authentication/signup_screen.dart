@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:chatapp/core/size.dart';
 import 'package:chatapp/core/validation.dart';
+import 'package:chatapp/functions/firebase_funtions.dart';
 import 'package:chatapp/persentation/authentication/login_screen.dart';
 import 'package:chatapp/persentation/authentication/widgets/custom_button.dart';
 import 'package:chatapp/persentation/authentication/widgets/text_field_widget.dart';
@@ -64,9 +65,15 @@ class SignupScreen extends StatelessWidget {
                 ),
                 constHeight40,
                 CustomButton(
-                  onTap: () {
+                  onTap: () async{
                     if (_formKey.currentState!.validate()) {
-                      log("ok");
+                    await  singUpFunction(
+                          context: context,
+                          email: _emailController.text,
+                          password: _passwordController.text,
+                          name: _nameController.text,
+                          phone: _phoneController.text);
+                      log("mone set");
                     }
                   },
                   title: "SignUp",

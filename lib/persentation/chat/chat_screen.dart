@@ -110,11 +110,7 @@ class ChatScreen extends StatelessWidget {
                                     children: [
                                       Text(
                                         chatList[index].message,
-                                        // style: TextStyle(
-                                        //       color: chatList[index].code == "0"
-                                        //           ? Colors.black
-                                        //           : Colors.white,
-                                        //     ),
+                                      
                                       ),
                                     ],
                                   ),

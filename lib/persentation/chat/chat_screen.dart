@@ -1,6 +1,9 @@
 import 'dart:developer';
 
+import 'package:chatapp/persentation/authentication/login_screen.dart';
 import 'package:chatapp/persentation/chat/bloc/chat_bloc.dart';
+import 'package:chatapp/persentation/chat/widgets/confirmation_dilogebox.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,6 +31,30 @@ class ChatScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Chat"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              confirmationDiloge(
+                context: context,
+                title: "Confirm Logout",
+                confirmBtn: () async {
+                  await FirebaseAuth.instance.signOut();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                    (route) => false,
+                  );
+                },
+                content: "Are you sure you want to log out?",
+              );
+            },
+            icon: const Icon(
+              Icons.logout_outlined,
+            ),
+          )
+        ],
       ),
       body: BlocConsumer<ChatBloc, ChatState>(
         listener: (context, state) {},

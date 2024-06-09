@@ -1,8 +1,8 @@
 import 'package:chatapp/functions/db_functions.dart';
 import 'package:chatapp/persentation/authentication/bloc/authentication_bloc.dart';
-import 'package:chatapp/persentation/authentication/login_screen.dart';
 import 'package:chatapp/persentation/chat/bloc/chat_bloc.dart';
-import 'package:chatapp/persentation/models/chat_model.dart';
+import 'package:chatapp/models/chat_model.dart';
+import 'package:chatapp/persentation/splash/splash.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: LoginScreen(),
+        home: const SplashScreen(),
         darkTheme: ThemeData.dark().copyWith(
           scaffoldBackgroundColor: Colors.black,
           appBarTheme: const AppBarTheme(

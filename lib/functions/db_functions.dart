@@ -1,5 +1,5 @@
 import 'package:chatapp/persentation/chat/bloc/chat_bloc.dart';
-import 'package:chatapp/persentation/models/chat_model.dart';
+import 'package:chatapp/models/chat_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 

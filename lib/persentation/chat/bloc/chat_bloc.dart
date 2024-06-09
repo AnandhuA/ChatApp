@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:chatapp/functions/db_functions.dart';
-import 'package:chatapp/persentation/models/chat_model.dart';
+import 'package:chatapp/models/chat_model.dart';
 import 'package:flutter/material.dart';
 import 'package:web_socket_channel/io.dart';
 

@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.black,
         ),
       ),
+      themeMode: ThemeMode.dark,
     );
   }
 }

@@ -6,6 +6,7 @@ class TextFieldWidget extends StatefulWidget {
   final bool obscureText;
   final TextInputType? keyboard;
   final int? maxlength;
+  final  FormFieldValidator<String>? validation;
 
   const TextFieldWidget(
       {super.key,
@@ -13,7 +14,7 @@ class TextFieldWidget extends StatefulWidget {
       required this.label,
       this.obscureText = false,
       this.keyboard,
-      this.maxlength});
+      this.maxlength,required this.validation,});
 
   @override
   State<TextFieldWidget> createState() => _TextFieldWidgetState();
@@ -30,6 +31,7 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator:widget.validation,
       controller: widget.controller,
       obscureText: visibility,
       keyboardType: widget.keyboard,

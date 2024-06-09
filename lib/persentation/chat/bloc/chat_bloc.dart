@@ -51,8 +51,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       }
     } catch (error) {
       log("eroorrr");
-      emit(ChatErrorState(error: error.toString()));
+      
     }
   }
 }
-// 185067675

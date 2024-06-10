@@ -47,7 +47,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         );
         await DbChatFunctions.addChatList(chatModel: model);
         chatList.add(model);
-         emit(ChatSuccessState());
+        emit(ChatSuccessState());
       }
     } catch (error) {
       log(error.toString());

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:chatapp/persentation/authentication/signup_screen.dart';
 import 'package:chatapp/persentation/chat/chat_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body:  Center(
+      body: Center(
         child: Text(
           "Loading....",
         ),
@@ -31,6 +32,9 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void checkLogin() async {
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(); // Ensures Firebase is initialized
+    }
     final firebaseAuth = FirebaseAuth.instance;
 
     if (firebaseAuth.currentUser == null) {
